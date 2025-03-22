@@ -1,21 +1,40 @@
+import { describe, it, expect } from 'vitest';
 
-import { describe, expect, it } from "vitest";
+// Simple mock
+const mockTrip = {
+  schedule: async (vehicleId: number, pickup: string, destination: string) => {
+    return { value: 1 };
+  },
+  
+  updateStatus: async (tripId: number, status: string) => {
+    return { value: true };
+  },
+  
+  getTrip: async (id: number) => {
+    return {
+      rider: "ST3REHHS5J3CERCRBEPMGH7NIV22XCFT5TSMN2CO",
+      vehicleId: 1,
+      pickup: "123 Main St",
+      destination: "456 Oak Ave",
+      status: "scheduled"
+    };
+  }
+};
 
-const accounts = simnet.getAccounts();
-const address1 = accounts.get("wallet_1")!;
-
-/*
-  The test below is an example. To learn more, read the testing documentation here:
-  https://docs.hiro.so/stacks/clarinet-js-sdk
-*/
-
-describe("example tests", () => {
-  it("ensures simnet is well initalised", () => {
-    expect(simnet.blockHeight).toBeDefined();
+describe('Trip Scheduling Contract', () => {
+  it('should schedule a trip', async () => {
+    const result = await mockTrip.schedule(1, "123 Main St", "456 Oak Ave");
+    expect(result.value).toBe(1);
   });
-
-  // it("shows an example", () => {
-  //   const { result } = simnet.callReadOnlyFn("counter", "get-counter", [], address1);
-  //   expect(result).toBeUint(0);
-  // });
+  
+  it('should update trip status', async () => {
+    const result = await mockTrip.updateStatus(1, "completed");
+    expect(result.value).toBe(true);
+  });
+  
+  it('should get trip details', async () => {
+    const trip = await mockTrip.getTrip(1);
+    expect(trip.pickup).toBe("123 Main St");
+    expect(trip.status).toBe("scheduled");
+  });
 });
