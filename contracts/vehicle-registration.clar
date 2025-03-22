@@ -1,30 +1,42 @@
+;; Vehicle Registration Contract
+;; Records details of accessible transport options
 
-;; title: vehicle-registration
-;; version:
-;; summary:
-;; description:
+(define-data-var last-id uint u0)
 
-;; traits
-;;
+(define-map vehicles
+  { id: uint }
+  {
+    name: (string-ascii 100),
+    wheelchair: bool,
+    owner: principal
+  }
+)
 
-;; token definitions
-;;
+;; Register a vehicle
+(define-public (register
+    (name (string-ascii 100))
+    (wheelchair bool)
+  )
+  (let
+    (
+      (new-id (+ (var-get last-id) u1))
+    )
+    (var-set last-id new-id)
 
-;; constants
-;;
+    (map-set vehicles
+      { id: new-id }
+      {
+        name: name,
+        wheelchair: wheelchair,
+        owner: tx-sender
+      }
+    )
 
-;; data vars
-;;
+    (ok new-id)
+  )
+)
 
-;; data maps
-;;
-
-;; public functions
-;;
-
-;; read only functions
-;;
-
-;; private functions
-;;
-
+;; Get vehicle
+(define-read-only (get-vehicle (id uint))
+  (map-get? vehicles { id: id })
+)

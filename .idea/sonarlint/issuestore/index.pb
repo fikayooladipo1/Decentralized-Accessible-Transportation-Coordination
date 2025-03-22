@@ -9,3 +9,7 @@ N
 contracts/trip-scheduling.clar,0/a/0ac0edd4ee28bd297a944154686def8dd7571f2d
 M
 tests/trip-scheduling.test.ts,c/3/c3d9582b5d3d3b45227da119e3d044d16c754fb3
+S
+#contracts/vehicle-registration.clar,8/9/8951745f7048259d44f3ea336f35763bdc1d99fa
+R
+"tests/vehicle-registration.test.ts,f/4/f4e856bd7299c94b3b4918f3d899cd5c05d3b627
